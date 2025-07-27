@@ -880,26 +880,60 @@
             cellInputTypes[cellKey] = cellInputTypes[cellKey] === 'date' ? 'text' : 'date';
             renderTable();
         }
-        
         function convertToDateInput(value) {
-            if (!value || value.includes('-')) return value;
-            const parts = value.split('/');
-            if (parts.length === 2) {
-                const year = new Date().getFullYear();
-                const month = parts[0].padStart(2, '0');
-                const day = parts[1].padStart(2, '0');
-                return `${year}-${month}-${day}`;
-            }
-            return '';
+    if (!value || value.includes('-')) return value;
+    
+    // M/D形式の日付をyyyy-MM-dd形式に変換
+    const parts = value.split('/');
+    if (parts.length === 2) {
+        const year = new Date().getFullYear();
+        const month = parts[0].padStart(2, '0');
+        const day = parts[1].padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+    
+    // 年/月/日形式の場合の処理
+    if (value.includes('年') && value.includes('月') && value.includes('日')) {
+        const matches = value.match(/(\d+)年\s*(\d+)月\s*(\d+)日/);
+        if (matches) {
+            const year = matches[1];
+            const month = matches[2].padStart(2, '0');
+            const day = matches[3].padStart(2, '0');
+            return `${year}-${month}-${day}`;
         }
-        
-        function formatDateValue(dateValue) {
+    }
+    
+    return '';
+}
+    function formatDateValue(dateValue) {
     if (!dateValue) return '';
-    const date = new Date(dateValue);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    return `${month}/${day}`;  // M/D形式で表
+    
+    // yyyy-MM-dd形式の場合
+    if (dateValue.includes('-')) {
+        const parts = dateValue.split('-');
+        if (parts.length === 3) {
+            const month = parseInt(parts[1]);
+            const day = parseInt(parts[2]);
+            return `${month}/${day}`;
         }
+    }
+    
+    // Date型の場合
+    try {
+        const date = new Date(dateValue);
+        if (!isNaN(date.getTime())) {
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            return `${month}/${day}`;
+        }
+    } catch (e) {
+        // エラーの場合はそのまま返す
+    }
+    
+    return dateValue;
+}   
+        
+   
         
         function showEditCustomerModal() {
             updateCustomerList();
@@ -1388,15 +1422,96 @@
                 showNotification('有効なデータが見つかりませんでした', true);
             }
         }
-        
         function processExcelData(rows) {
-            let headerRowIndex = -1;
-            for (let i = 0; i < Math.min(10, rows.length); i++) {
-                if (rows[i] && rows[i].includes('顧客名')) {
-                    headerRowIndex = i;
-                    break;
+    let headerRowIndex = -1;
+    for (let i = 0; i < Math.min(10, rows.length); i++) {
+        if (rows[i] && rows[i].some(cell => 
+            cell && cell.toString().includes('顧客名'))) {
+            headerRowIndex = i;
+            break;
+        }
+    }
+    
+    if (headerRowIndex === -1) {
+        showNotification('有効なデータが見つかりませんでした', true);
+        return;
+    }
+    
+    const headers = rows[headerRowIndex];
+    const newData = [];
+    
+    for (let i = headerRowIndex + 1; i < rows.length; i++) {
+        const row = rows[i];
+        if (row && row[1] && row[1].toString().trim()) {  // 顧客名で判定
+            const newRow = {};
+            
+            // 固定列のマッピング
+            newRow['No'] = row[0] || (newData.length + 1);
+            newRow['顧客名'] = row[1] || '';
+            newRow['工事No'] = row[2] || '';  // 3列目が工事No
+            
+            // 残りの列を動的にマッピング
+            for (let j = 3; j < headers.length; j++) {
+                if (headers[j]) {
+                    const header = headers[j].toString().trim()
+                        .replace(/\r\n/g, '')
+                        .replace(/\n/g, '')
+                        .replace(/\r/g, '');
+                    
+                    const value = row[j];
+                    if (value !== null && value !== undefined) {
+                        // Excelの日付処理
+                        if (typeof value === 'object' && value.constructor.name === 'Date') {
+                            const month = value.getMonth() + 1;
+                            const day = value.getDate();
+                            newRow[header] = `${month}/${day}`;
+                        } else if (typeof value === 'number' && value > 40000 && value < 50000) {
+                            // Excelの日付シリアル値
+                            const date = new Date((value - 25569) * 86400 * 1000);
+                            const month = date.getMonth() + 1;
+                            const day = date.getDate();
+                            newRow[header] = `${month}/${day}`;
+                        } else {
+                            newRow[header] = value.toString();
+                        }
+                    } else {
+                        newRow[header] = '';
+                    }
                 }
             }
+            
+            // 不足している列を空文字で初期化
+            columns.forEach(col => {
+                if (!newRow.hasOwnProperty(col.name)) {
+                    newRow[col.name] = '';
+                }
+            });
+            
+            newData.push(newRow);
+        }
+    }
+    
+    if (newData.length > 0) {
+        if (confirm(`${newData.length}件のデータを読み込みました。現在のデータを置き換えますか？`)) {
+            data = newData;
+            
+            // 新しい列をcolumnsに追加
+            Object.keys(newData[0]).forEach(key => {
+                if (!columns.some(col => col.name === key)) {
+                    columns.push({ name: key, visible: true, fixed: false, editable: true });
+                }
+            });
+            
+            updatePositionSelects();
+            renderTable();
+            saveData();
+            showNotification('エクセルデータを読み込みました');
+        }
+    } else {
+        showNotification('有効なデータが見つかりませんでした', true);
+    }
+}
+       
             
             if (headerRowIndex === -1) {
                 showNotification('有効なデータが見つかりませんでした', true);
