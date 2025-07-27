@@ -1396,5 +1396,78 @@
         // 初期化
         initializeTable();
     </script>
+    // Excelファイル読み込み処理
+        document.getElementById('excelFileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                
+                // CSVファイルの場合
+                if (file.name.endsWith('.csv')) {
+                    reader.onload = function(e) {
+                        try {
+                            const text = e.target.result;
+                            const rows = text.split('\n').map(row => row.split(',').map(cell => cell.trim()));
+                            processSimpleCSVData(rows);
+                        } catch (error) {
+                            showNotification('CSVファイルの読み込みに失敗しました', true);
+                            console.error(error);
+                        }
+                    };
+                    reader.readAsText(file, 'UTF-8');
+                } else {
+                    // Excelファイルの場合
+                    reader.onload = function(e) {
+                        try {
+                            const data = new Uint8Array(e.target.result);
+                            const workbook = XLSX.read(data, { 
+                                type: 'array',
+                                cellStyles: true,
+                                cellFormula: true,
+                                cellDates: true,
+                                sheetStubs: true,
+                                raw: true
+                            });
+                            
+                            const firstSheetName = workbook.SheetNames[0];
+                            const worksheet = workbook.Sheets[firstSheetName];
+                            
+                            const merges = worksheet['!merges'] || [];
+                            
+                            const jsonData = XLSX.utils.sheet_to_json(worksheet, { 
+                                header: 1,
+                                raw: false,
+                                defval: ''
+                            });
+                            
+                            if (merges.length > 0) {
+                                merges.forEach(merge => {
+                                    const startRow = merge.s.r;
+                                    const endRow = merge.e.r;
+                                    const startCol = merge.s.c;
+                                    const endCol = merge.e.c;
+                                    
+                                    const value = jsonData[startRow] && jsonData[startRow][startCol] ? 
+                                                 jsonData[startRow][startCol] : '';
+                                    
+                                    for (let r = startRow; r <= endRow; r++) {
+                                        if (!jsonData[r]) jsonData[r] = [];
+                                        for (let c = startCol; c <= endCol; c++) {
+                                            jsonData[r][c] = value;
+                                        }
+                                    }
+                                });
+                            }
+                            
+                            processExcelData(jsonData);
+                        } catch (error) {
+                            showNotification('ファイルの読み込みに失敗しました', true);
+                            console.error(error);
+                        }
+                    };
+                    reader.readAsArrayBuffer(file);
+                }
+            }
+        });
 </body>
 </html>
