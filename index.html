@@ -1328,18 +1328,12 @@
             }
         }
         
-      function processExcelData(rows) {
+        function processExcelData(rows) {
             let headerRowIndex = -1;
-            
-            // ヘッダー行を探す（顧客名を含む行）
             for (let i = 0; i < Math.min(10, rows.length); i++) {
-                if (rows[i]) {
-                    // 配列内に「顧客名」が含まれているかチェック
-                    const rowStr = rows[i].join(',');
-                    if (rowStr.includes('顧客名')) {
-                        headerRowIndex = i;
-                        break;
-                    }
+                if (rows[i] && rows[i].includes('顧客名')) {
+                    headerRowIndex = i;
+                    break;
                 }
             }
             
@@ -1348,65 +1342,42 @@
                 return;
             }
             
-            // ヘッダー行から実際のヘッダーを抽出（空白を除く）
-            const headerRow = rows[headerRowIndex];
-            const actualHeaders = [];
-            const headerPositions = [];
-            
-            for (let i = 0; i < headerRow.length; i++) {
-                if (headerRow[i] && headerRow[i].toString().trim() !== '') {
-                    const cleanHeader = headerRow[i].toString().trim()
-                        .replace(/\r\n/g, '')
-                        .replace(/\n/g, '')
-                        .replace(/\r/g, '');
-                    actualHeaders.push(cleanHeader);
-                    headerPositions.push(i);
-                }
-            }
-            
+            const headers = rows[headerRowIndex];
             const newData = [];
             
-            // データ行を処理
             for (let i = headerRowIndex + 1; i < rows.length; i++) {
                 const row = rows[i];
-                
-                // 有効なデータ行かチェック
-                if (row && row.some(cell => cell && cell.toString().trim() !== '')) {
-                    const newRow = {
-                        'No': newData.length + 1
-                    };
+                if (row && row[1] && row[1].toString().trim()) {
+                    const newRow = {};
                     
-                    // データから空白セルを除去して実際の値を取得
-                    const actualValues = [];
-                    for (let j = 0; j < row.length; j++) {
-                        if (row[j] !== null && row[j] !== undefined && row[j] !== '') {
-                            actualValues.push(row[j]);
-                        }
-                    }
-                    
-                    // ヘッダーと値を対応付ける
-                    for (let k = 0; k < actualHeaders.length && k < actualValues.length; k++) {
-                        const header = actualHeaders[k];
-                        const value = actualValues[k];
-                        
-                        if (value !== null && value !== undefined) {
-                            if (typeof value === 'object' && value.constructor && value.constructor.name === 'Date') {
-                                // Excelの日付を処理
-                                const month = value.getMonth() + 1;
-                                const day = value.getDate();
-                                newRow[header] = `${month}/${day}`;
+                    headers.forEach((header, index) => {
+                        if (header && header.toString().trim()) {
+                            let normalizedHeader = header.toString().trim()
+                                .replace(/\r\n/g, '')
+                                .replace(/\n/g, '')
+                                .replace(/\r/g, '');
+                            
+                            const value = row[index];
+                            if (value !== null && value !== undefined) {
+                                if (typeof value === 'object' && value.constructor.name === 'Date') {
+                                    // Excelの日付を処理
+                                    const month = value.getMonth() + 1;
+                                    const day = value.getDate();
+                                    newRow[normalizedHeader] = `${month}/${day}`;
+                                } else {
+                                    newRow[normalizedHeader] = value.toString();
+                                }
                             } else {
-                                newRow[header] = value.toString().trim();
+                                newRow[normalizedHeader] = '';
                             }
-                        } else {
-                            newRow[header] = '';
                         }
+                    });
+                    
+                    if (!newRow['No']) {
+                        newRow['No'] = newData.length + 1;
                     }
                     
-                    // 主要な列に値があるデータのみ追加
-                    if (newRow['顧客名'] || newRow['工事No']) {
-                        newData.push(newRow);
-                    }
+                    newData.push(newRow);
                 }
             }
             
@@ -1414,10 +1385,9 @@
                 if (confirm(`${newData.length}件のデータを読み込みました。現在のデータを置き換えますか？`)) {
                     data = newData;
                     
-                    // 新しい列を追加（既存の列にない場合）
-                    actualHeaders.forEach(header => {
-                        if (header && !columns.some(col => col.name === header)) {
-                            columns.push({ name: header, visible: true, fixed: false });
+                    Object.keys(newData[0]).forEach(key => {
+                        if (!columns.some(col => col.name === key)) {
+                            columns.push({ name: key, visible: true, fixed: false });
                         }
                     });
                     
@@ -1430,3 +1400,44 @@
                 showNotification('有効なデータが見つかりませんでした', true);
             }
         }
+        
+        function showNotification(message, isWarning = false) {
+            const notification = document.createElement('div');
+            notification.className = isWarning ? 'notification warning' : 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        
+        // 年度変更時の処理
+        document.getElementById('year').addEventListener('change', function() {
+            loadData();
+            updatePositionSelects();
+            renderTable();
+        });
+        
+        // 営業所変更時の処理
+        document.getElementById('office').addEventListener('change', function() {
+            loadData();
+            updatePositionSelects();
+            renderTable();
+        });
+        
+        // キーボードショートカット
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 's') {
+                    e.preventDefault();
+                    saveData();
+                }
+            }
+        });
+        
+        // 初期化
+        initializeTable();
+    </script>
+</body>
+</html>
