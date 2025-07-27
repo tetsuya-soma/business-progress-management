@@ -1510,14 +1510,9 @@
         showNotification('有効なデータが見つかりませんでした', true);
     }
 }
+     }   
        
-            
-            if (headerRowIndex === -1) {
-                showNotification('有効なデータが見つかりませんでした', true);
-                return;
-            }
-            
-            const headers = rows[headerRowIndex];
+          const headers = rows[headerRowIndex];
             const newData = [];
             
             for (let i = headerRowIndex + 1; i < rows.length; i++) {
