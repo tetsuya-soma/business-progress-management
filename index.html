@@ -14,7 +14,6 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'メイリオ', 'Meiryo', sans-serif;
             background: #f5f5f5;
-            padding: 0;
             color: #333;
         }
         
@@ -22,8 +21,7 @@
             max-width: 100%;
             margin: 0;
             background: white;
-            overflow: hidden;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
@@ -42,190 +40,73 @@
             font-weight: normal;
         }
         
-        .header-info {
+        .header-controls {
             display: flex;
-            align-items: center;
             gap: 20px;
-        }
-        
-        .office-selector {
-            display: flex;
             align-items: center;
-            gap: 10px;
         }
         
-        .office-selector select {
+        .header select {
             padding: 6px 12px;
             border-radius: 3px;
             border: none;
             font-size: 14px;
-            background: white;
-            color: #333;
         }
         
-        .year-selector {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .year-selector select {
-            padding: 6px 12px;
-            border-radius: 3px;
-            border: none;
-            font-size: 14px;
-            background: white;
-            color: #333;
-        }
-        
-        .edit-status {
-            background: #ffc107;
-            color: #333;
-            padding: 5px 15px;
-            border-radius: 3px;
-            font-size: 13px;
-            display: none;
-        }
-        
-        .edit-status.active {
-            display: block;
-        }
-        
-        .tabs-container {
+        .actions {
             background: #2a6bb3;
+            padding: 10px 20px;
             display: flex;
-            padding: 0;
-            border-bottom: none;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         
-        .tab {
-            padding: 10px 20px;
+        .btn {
+            padding: 8px 16px;
             background: #4d8fd9;
             color: white;
             border: none;
+            border-radius: 3px;
             cursor: pointer;
             font-size: 14px;
-            transition: background 0.2s;
-            flex: 1;
-            text-align: center;
-            border-right: 1px solid #2a6bb3;
         }
         
-        .tab:last-child {
-            border-right: none;
-        }
-        
-        .tab:hover {
+        .btn:hover {
             background: #5a9ae5;
-        }
-        
-        .tab.active {
-            background: #6ba5e9;
         }
         
         .table-container {
             flex: 1;
             overflow: auto;
-            position: relative;
             padding: 10px;
         }
         
         table {
             border-collapse: collapse;
-            font-size: 12px;
-            width: auto;
-            table-layout: fixed;
-            background: white;
+            width: 100%;
+            font-size: 13px;
         }
         
         th, td {
-            border: 1px solid #ccc;
-            padding: 6px 8px;
-            text-align: center;
-            white-space: nowrap;
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
         }
         
         th {
-            background: #e9ecef;
+            background: #f0f0f0;
             font-weight: normal;
             position: sticky;
             top: 0;
             z-index: 10;
-            cursor: pointer;
-        }
-        
-        th:hover {
-            background: #dee2e6;
-        }
-        
-        /* 固定列のスタイル */
-        .fixed-column {
-            position: sticky;
-            background: white;
-            z-index: 5;
-        }
-        
-        th.fixed-column {
-            background: #e9ecef;
-            z-index: 11;
-            border-right: 2px solid #999;
-        }
-        
-        td.fixed-column {
-            border-right: 2px solid #999;
-        }
-        
-        .fixed-no {
-            left: 0;
-            width: 40px;
-            min-width: 40px;
-            max-width: 40px;
-        }
-        
-        .fixed-name {
-            left: 40px;
-            width: 150px;
-            min-width: 150px;
-            max-width: 150px;
-        }
-        
-        .fixed-work {
-            left: 190px;
-            width: 100px;
-            min-width: 100px;
-            max-width: 100px;
-        }
-        
-        .row-number {
-            background: #f8f9fa;
-            font-weight: normal;
-            color: #666;
-        }
-        
-        .customer-name {
-            text-align: left;
-            font-weight: 500;
-        }
-        
-        .work-number {
-            font-weight: 500;
-        }
-        
-        .building-location {
-            min-width: 200px;
-            text-align: left;
         }
         
         tr:hover {
-            background: #f5f5f5;
+            background: #f9f9f9;
         }
         
         .editable {
             cursor: text;
-            padding: 4px;
-            min-height: 25px;
-            display: block;
-            width: 100%;
         }
         
         .editable:hover {
@@ -235,55 +116,6 @@
         .editable:focus {
             outline: 2px solid #2196f3;
             background: white;
-        }
-        
-        .cell-input {
-            border: none;
-            background: transparent;
-            width: 100%;
-            text-align: center;
-            padding: 4px;
-            font-size: 12px;
-        }
-        
-        .cell-input:focus {
-            outline: 2px solid #2196f3;
-            background: white;
-        }
-        
-        .input-type-toggle {
-            position: absolute;
-            right: 2px;
-            top: 2px;
-            font-size: 10px;
-            background: #e3f2fd;
-            border: none;
-            padding: 2px 4px;
-            cursor: pointer;
-            border-radius: 2px;
-            display: none;
-        }
-        
-        td:hover .input-type-toggle {
-            display: block;
-        }
-        
-        .delete-row {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 11px;
-        }
-        
-        .delete-row:hover {
-            background: #c82333;
-        }
-        
-        .highlight {
-            background: #fff3cd !important;
         }
         
         .modal {
@@ -298,39 +130,33 @@
         }
         
         .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
             background: white;
-            padding: 30px;
-            border-radius: 5px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            margin: 50px auto;
+            padding: 20px;
             width: 90%;
             max-width: 600px;
             max-height: 80vh;
             overflow-y: auto;
+            border-radius: 5px;
         }
         
         .modal-header {
             font-size: 18px;
             margin-bottom: 20px;
-            color: #333;
         }
         
-        .modal-row {
+        .form-group {
             margin-bottom: 15px;
         }
         
-        .modal-label {
+        .form-group label {
             display: block;
             margin-bottom: 5px;
             font-weight: 500;
-            color: #555;
-            font-size: 13px;
         }
         
-        .modal-input, .modal-select {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
@@ -345,110 +171,12 @@
             margin-top: 20px;
         }
         
-        .btn {
-            padding: 8px 16px;
+        .btn-primary {
             background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: background 0.2s;
-        }
-        
-        .btn:hover {
-            background: #0056b3;
-        }
-        
-        .btn-add {
-            background: #28a745;
-        }
-        
-        .btn-add:hover {
-            background: #218838;
         }
         
         .btn-danger {
             background: #dc3545;
-        }
-        
-        .btn-danger:hover {
-            background: #c82333;
-        }
-        
-        .column-selector {
-            max-height: 300px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin: 10px 0;
-        }
-        
-        .column-checkbox {.column-settings-list {
-    max-height: 400px;
-    overflow-y: auto;
-    padding: 10px;
-    border: 1px solid #ddd;
-    margin: 10px 0;
-}
-
-.column-setting-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px;
-    border-bottom: 1px solid #eee;
-}
-
-.column-setting-item:hover {
-    background: #f5f5f5;
-}
-
-.column-setting-item span {
-    font-weight: 500;
-}
-
-.column-setting-item label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-}.column-settings-list {
-    max-height: 400px;
-    overflow-y: auto;
-    padding: 10px;
-    border: 1px solid #ddd;
-    margin: 10px 0;
-}
-
-.column-setting-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px;
-    border-bottom: 1px solid #eee;
-}
-
-.column-setting-item:hover {
-    background: #f5f5f5;
-}
-
-.column-setting-item span {
-    font-weight: 500;
-}
-
-.column-setting-item label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-}
-            display: block;
-            margin: 5px 0;
-        }
-        
-        .column-checkbox input {
-            margin-right: 8px;
         }
         
         .notification {
@@ -464,11 +192,6 @@
             animation: slideIn 0.3s ease;
         }
         
-        .notification.warning {
-            background: #ffc107;
-            color: #333;
-        }
-        
         @keyframes slideIn {
             from {
                 transform: translateX(100%);
@@ -479,1187 +202,358 @@
                 opacity: 1;
             }
         }
-        
-        .column-list {
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin: 10px 0;
-        }
-        
-        .column-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .column-item:hover {
-            background: #f5f5f5;
-        }
-        
-        .column-item input {
-            flex: 1;
-            margin-right: 10px;
-            padding: 4px 8px;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-        }
-        
-        .column-actions {
-            display: flex;
-            gap: 5px;
-        }
-        
-        .btn-small {
-            padding: 4px 8px;
-            font-size: 12px;
-        }
-        
-        /* 列幅の動的調整 */
-        .auto-width {
-            width: auto;
-            min-width: 80px;
-        }
-        
-        .text-left {
-            text-align: left !important;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>業務進捗管理表</h1>
-            <div class="header-info">
-                <div class="office-selector">
-                    <label for="office">営業所：</label>
-                    <select id="office">
-                        <option value="sapporo">札幌営業所</option>
-                        <option value="tokyo">東京営業所</option>
-                        <option value="osaka">大阪営業所</option>
-                        <option value="fukuoka">福岡営業所</option>
-                    </select>
-                </div>
-                <div class="year-selector">
-                    <select id="year">
-                        <option value="2025">2025年4月～2026年3月</option>
-                        <option value="2024">2024年4月～2025年3月</option>
-                        <option value="2023">2023年4月～2024年3月</option>
-                    </select>
-                </div>
-                <div class="edit-status" id="editStatus">
-                    ⚠️ 他のユーザーが編集中です
-                </div>
+            <div class="header-controls">
+                <select id="office">
+                    <option value="sapporo">札幌営業所</option>
+                    <option value="tokyo">東京営業所</option>
+                    <option value="osaka">大阪営業所</option>
+                    <option value="fukuoka">福岡営業所</option>
+                </select>
+                <select id="year">
+                    <option value="2025">2025年度</option>
+                    <option value="2024">2024年度</option>
+                    <option value="2023">2023年度</option>
+                </select>
             </div>
         </div>
         
-        <div class="tabs-container">
-            <button class="tab active" onclick="showEditCustomerModal()">顧客を編集</button>
-            <button class="tab" onclick="showEditColumnModal()">列を編集</button>
-            <button class="tab" onclick="showColumnVisibilityModal()">表示列の選択</button>
-            <button class="tab" onclick="showColumnSettingsModal()">列の固定設定</button>
-            <button class="tab" onclick="saveData()">保存</button>
-            <button class="tab" onclick="exportToCSV()">CSV出力</button>
-            <button class="tab" onclick="importData()">インポート</button>
-            <button class="tab" onclick="document.getElementById('excelFileInput').click()">サンプルデータ読込</button>
+        <div class="actions">
+            <button class="btn" onclick="showAddCustomerModal()">顧客を追加</button>
+            <button class="btn" onclick="showAddColumnModal()">列を追加</button>
+            <button class="btn" onclick="exportData()">CSV出力</button>
+            <button class="btn" onclick="importData()">データ読込</button>
         </div>
         
         <div class="table-container">
             <table id="dataTable">
-                <thead>
-                    <tr id="headerRow"></tr>
-                </thead>
-                <tbody id="tableBody">
-                </tbody>
+                <thead id="tableHeader"></thead>
+                <tbody id="tableBody"></tbody>
             </table>
         </div>
     </div>
     
-    <!-- 顧客編集モーダル -->
-    <div id="editCustomerModal" class="modal">
+    <!-- 顧客追加モーダル -->
+    <div id="addCustomerModal" class="modal">
         <div class="modal-content">
-            <h3 class="modal-header">顧客の編集</h3>
-            <div class="modal-row">
-                <button class="btn btn-add" onclick="showAddCustomerForm()">➕ 新規顧客を追加</button>
+            <h2 class="modal-header">顧客を追加</h2>
+            <div class="form-group">
+                <label>顧客名</label>
+                <input type="text" id="customerName" placeholder="例: 山田 太郎">
             </div>
-            <div id="addCustomerForm" style="display: none; padding: 15px; background: #f8f9fa; border-radius: 5px; margin-bottom: 20px;">
-                <div class="modal-row">
-                    <label class="modal-label">挿入位置</label>
-                    <select id="rowPosition" class="modal-select">
-                        <option value="end">最後に追加</option>
-                    </select>
-                </div>
-                <div class="modal-row">
-                    <label class="modal-label">顧客名</label>
-                    <input type="text" id="customerName" class="modal-input" placeholder="例: 山田 太郎">
-                </div>
-                <div class="modal-row">
-                    <label class="modal-label">工事No</label>
-                    <input type="text" id="workNumber" class="modal-input" placeholder="例: 251001">
-                </div>
-                <div class="modal-row">
-                    <label class="modal-label">フリガナ</label>
-                    <input type="text" id="furigana" class="modal-input" placeholder="例: ヤマダ タロウ">
-                </div>
-                <div class="modal-row">
-                    <label class="modal-label">建築地</label>
-                    <input type="text" id="buildingLocation" class="modal-input" placeholder="例: 札幌市中央区">
-                </div>
-                <div class="modal-row">
-                    <label class="modal-label">融資</label>
-                    <input type="text" id="financing" class="modal-input" placeholder="例: 道銀">
-                </div>
-                <button class="btn btn-add" onclick="addRow()">追加</button>
-                <button class="btn btn-danger" onclick="hideAddCustomerForm()">キャンセル</button>
+            <div class="form-group">
+                <label>工事No</label>
+                <input type="text" id="workNumber" placeholder="例: 2025001">
             </div>
-            <div class="column-list" id="customerList"></div>
+            <div class="form-group">
+                <label>フリガナ</label>
+                <input type="text" id="furigana" placeholder="例: ヤマダ タロウ">
+            </div>
+            <div class="form-group">
+                <label>建築地</label>
+                <input type="text" id="buildingLocation" placeholder="例: 札幌市中央区">
+            </div>
             <div class="modal-buttons">
-                <button class="btn" onclick="closeModal('editCustomerModal')">閉じる</button>
+                <button class="btn btn-primary" onclick="addCustomer()">追加</button>
+                <button class="btn btn-danger" onclick="closeModal('addCustomerModal')">キャンセル</button>
             </div>
         </div>
     </div>
     
-    <!-- 列編集モーダル -->
-    <div id="editColumnModal" class="modal">
+    <!-- 列追加モーダル -->
+    <div id="addColumnModal" class="modal">
         <div class="modal-content">
-            <h3 class="modal-header">列の編集</h3>
-            <div class="modal-row">
-                <button class="btn btn-add" onclick="showAddColumnForm()">➕ 新規列を追加</button>
+            <h2 class="modal-header">列を追加</h2>
+            <div class="form-group">
+                <label>列名</label>
+                <input type="text" id="columnName" placeholder="例: 契約日">
             </div>
-            <div id="addColumnForm" style="display: none; padding: 15px; background: #f8f9fa; border-radius: 5px; margin-bottom: 20px;">
-                <div class="modal-row">
-                    <label class="modal-label">列名</label>
-                    <input type="text" id="columnName" class="modal-input" placeholder="列名を入力してください">
-                </div>
-                <div class="modal-row">
-                    <label class="modal-label">挿入位置</label>
-                    <select id="columnPosition" class="modal-select">
-                        <option value="end">最後に追加</option>
-                    </select>
-                </div>
-                <button class="btn btn-add" onclick="addColumn()">追加</button>
-                <button class="btn btn-danger" onclick="hideAddColumnForm()">キャンセル</button>
-            </div>
-            <div class="column-list" id="columnList"></div>
             <div class="modal-buttons">
-                <button class="btn" onclick="closeModal('editColumnModal')">閉じる</button>
+                <button class="btn btn-primary" onclick="addColumn()">追加</button>
+                <button class="btn btn-danger" onclick="closeModal('addColumnModal')">キャンセル</button>
             </div>
         </div>
     </div>
     
-    <!-- 列表示選択モーダル -->
-    <div id="columnVisibilityModal" class="modal">
-        <div class="modal-content">
-            <h3 class="modal-header">表示する列を選択</h3>
-            <div class="column-selector" id="columnSelector"></div>
-            <div class="modal-buttons">
-                <button class="btn" onclick="applyColumnVisibility()">適用</button>
-                <button class="btn btn-danger" onclick="closeModal('columnVisibilityModal')">キャンセル</button>
-            </div>
-        </div>
-    </div>
+    <input type="file" id="fileInput" style="display: none;" accept=".csv,.xlsx,.xls">
     
-    <input type="file" id="fileInput" style="display: none;" accept=".json,.csv">
-    <input type="file" id="excelFileInput" style="display: none;" accept=".xlsx,.xls,.csv">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
+        // データ管理
         let data = [];
-            let columns = [
-    { name: 'No', visible: true, fixed: true, editable: false },
-    { name: '顧客名', visible: true, fixed: true, editable: true },
-    { name: '工事No', visible: true, fixed: true, editable: true },
-    { name: 'フリガナ', visible: true, fixed: false, editable: true },
-    { name: '建築地', visible: true, fixed: false, editable: true },
-    { name: '融資', visible: true, fixed: false, editable: true },
-    { name: 'プランナー', visible: true, fixed: false, editable: true },
-    { name: '設計', visible: true, fixed: false, editable: true },
-    { name: 'IC', visible: true, fixed: false, editable: true },
-    { name: '工事', visible: true, fixed: false, editable: true },
-    { name: '管理', visible: true, fixed: false, editable: true },
-    { name: '積算', visible: true, fixed: false, editable: true },
-    { name: '解体', visible: true, fixed: false, editable: true },
-    { name: '現調', visible: true, fixed: false, editable: true },
-    { name: '契約', visible: true, fixed: false, editable: true },
-    { name: 'プラン決定', visible: true, fixed: false, editable: true },
-    { name: 'プラン変更', visible: true, fixed: false, editable: true },
-    { name: '地盤調査', visible: true, fixed: false, editable: true },
-    { name: '遣方立合', visible: true, fixed: false, editable: true },
-    { name: '敷地調査', visible: true, fixed: false, editable: true },
-    { name: '事前融資', visible: true, fixed: false, editable: true },
-    { name: '事前承認', visible: true, fixed: false, editable: true },
-    { name: '土地契約', visible: true, fixed: false, editable: true },
-    { name: '融資申込', visible: true, fixed: false, editable: true },
-    { name: '融資承認', visible: true, fixed: false, editable: true },
-    { name: '土地決裁', visible: true, fixed: false, editable: true },
-    { name: '確認提出', visible: true, fixed: false, editable: true },
-    { name: '技術申請', visible: true, fixed: false, editable: true },
-    { name: '認定申請', visible: true, fixed: false, editable: true },
-    { name: '最終図面依頼', visible: true, fixed: false, editable: true },
-    { name: '決定承認図', visible: true, fixed: false, editable: true },
-    { name: '着工', visible: true, fixed: false, editable: true },
-    { name: '大工乗込', visible: true, fixed: false, editable: true },
-    { name: '上棟', visible: true, fixed: false, editable: true },
-    { name: '大工完了', visible: true, fixed: false, editable: true },
-    { name: '完了検査', visible: true, fixed: false, editable: true },
-    { name: '施主検査', visible: true, fixed: false, editable: true },
-    { name: '引渡日（OP日）', visible: true, fixed: false, editable: true },
-    { name: '契約完成', visible: true, fixed: false, editable: true },
-    { name: '台帳竣工', visible: true, fixed: false, editable: true },
-    { name: '引渡ﾌｧｲﾙお渡し日', visible: true, fixed: false, editable: true },
-    { name: '中間（融資）', visible: true, fixed: false, editable: true },
-    { name: '中間（自己資金）', visible: true, fixed: false, editable: true },
-    { name: '最終金（融資）', visible: true, fixed: false, editable: true },
-    { name: '最終金（自己資金）', visible: true, fixed: false, editable: true }
-];
-
-        
-        // セルの入力タイプを管理
-        let cellInputTypes = {};
-        
-        // 編集状態の管理（実際のバックエンド実装時は削除）
-        let editingUsers = [];
-        let editingInterval = null;
+        let columns = [
+            { id: 'no', name: 'No', width: 50, editable: false },
+            { id: 'customerName', name: '顧客名', width: 150, editable: true },
+            { id: 'workNumber', name: '工事No', width: 100, editable: true },
+            { id: 'furigana', name: 'フリガナ', width: 150, editable: true },
+            { id: 'buildingLocation', name: '建築地', width: 200, editable: true }
+        ];
         
         // 初期化
-        function initializeTable() {
+        function init() {
             loadData();
-            if (data.length === 0) {
-                data = [{
-                    'No': 1,
-                    '顧客名': 'サンプル顧客',
-                    '工事No': '250001',
-                    'フリガナ': 'サンプルコキャク',
-                    '建築地': '札幌市中央区',
-                    '融資': ''
-                }];
-            }
-            updatePositionSelects();
             renderTable();
-            simulateEditingStatus();
         }
         
-        // 編集状態のシミュレーション（バックエンド実装時は実際のWebSocket等に置き換え）
-        function simulateEditingStatus() {
-            editingInterval = setInterval(() => {
-                // ランダムに編集中ユーザーをシミュレート
-                if (Math.random() > 0.7) {
-                    document.getElementById('editStatus').classList.add('active');
-                } else {
-                    document.getElementById('editStatus').classList.remove('active');
-                }
-            }, 5000);
+        // データの読み込み
+        function loadData() {
+            const office = document.getElementById('office').value;
+            const year = document.getElementById('year').value;
+            const key = `progress_${office}_${year}`;
+            const saved = localStorage.getItem(key);
+            
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                data = parsed.data || [];
+                columns = parsed.columns || columns;
+            }
         }
         
+        // データの保存
+        function saveData() {
+            const office = document.getElementById('office').value;
+            const year = document.getElementById('year').value;
+            const key = `progress_${office}_${year}`;
+            
+            localStorage.setItem(key, JSON.stringify({
+                data: data,
+                columns: columns
+            }));
+            
+            showNotification('保存しました');
+        }
+        
+        // テーブルの描画
         function renderTable() {
             renderHeader();
             renderBody();
         }
         
+        // ヘッダーの描画
         function renderHeader() {
-            const headerRow = document.getElementById('headerRow');
-            headerRow.innerHTML = '';
+            const header = document.getElementById('tableHeader');
+            header.innerHTML = '';
             
-            columns.filter(col => col.visible).forEach((col, index) => {
+            const tr = document.createElement('tr');
+            
+            columns.forEach(col => {
                 const th = document.createElement('th');
-                th.onclick = () => showColumnEditDialog(col, index);
-                
-                if (col.name === 'No') {
-                    th.className = 'fixed-column fixed-no row-number';
-                } else if (col.name === '顧客名') {
-                    th.className = 'fixed-column fixed-name';
-                } else if (col.name === '工事No') {
-                    th.className = 'fixed-column fixed-work';
-                }
-                
                 th.textContent = col.name;
-                headerRow.appendChild(th);
+                th.style.width = col.width + 'px';
+                tr.appendChild(th);
             });
             
             // 操作列
-            const actionTh = document.createElement('th');
-            actionTh.textContent = '操作';
-            headerRow.appendChild(actionTh);
+            const th = document.createElement('th');
+            th.textContent = '操作';
+            th.style.width = '100px';
+            tr.appendChild(th);
+            
+            header.appendChild(tr);
         }
         
+        // ボディの描画
         function renderBody() {
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
             
-            data.forEach((row, rowIndex) => {
+            data.forEach((row, index) => {
                 const tr = document.createElement('tr');
                 
-                columns.filter(col => col.visible).forEach(col => {
+                columns.forEach(col => {
                     const td = document.createElement('td');
-                    td.style.position = 'relative';
                     
-                    const value = row[col.name] || '';
-                    const cellKey = `${rowIndex}-${col.name}`;
-                    const inputType = cellInputTypes[cellKey] || 'text';
-                    
-                    if (col.name === 'No') {
-                        td.className = 'fixed-column fixed-no row-number';
-                        td.textContent = row.No || (rowIndex + 1);
-                    } else if (col.name === '顧客名') {
-                        td.className = 'fixed-column fixed-name customer-name';
-                        td.innerHTML = `<div class="editable" contenteditable="true" 
-                                           onblur="updateCell(${rowIndex}, '${col.name}', this.textContent)">${value}</div>`;
-                    } else if (col.name === '工事No') {
-                        td.className = 'fixed-column fixed-work work-number';
-                        td.innerHTML = `<div class="editable" contenteditable="true" 
-                                           onblur="updateCell(${rowIndex}, '${col.name}', this.textContent)">${value}</div>`;
-                    } else if (col.name === '建築地') {
-                        td.className = 'building-location auto-width text-left';
-                        td.innerHTML = `<div class="editable" contenteditable="true" 
-                                           onblur="updateCell(${rowIndex}, '${col.name}', this.textContent)">${value}</div>`;
+                    if (col.id === 'no') {
+                        td.textContent = index + 1;
+                    } else if (col.editable) {
+                        td.contentEditable = true;
+                        td.className = 'editable';
+                        td.textContent = row[col.id] || '';
+                        td.onblur = function() {
+                            row[col.id] = this.textContent;
+                            saveData();
+                        };
                     } else {
-                        td.className = 'auto-width';
-                        // 日付入力と通常入力の切り替え可能なセル
-                        if (inputType === 'date') {
-                            td.innerHTML = `
-                                <input type="date" class="cell-input" value="${convertToDateInput(value)}" 
-                                       onchange="updateCell(${rowIndex}, '${col.name}', formatDateValue(this.value))">
-                                <button class="input-type-toggle" onclick="toggleInputType(${rowIndex}, '${col.name}')">文字</button>
-                            `;
-                        } else {
-                            td.innerHTML = `
-                                <input type="text" class="cell-input" value="${value}" 
-                                       onchange="updateCell(${rowIndex}, '${col.name}', this.value)"
-                                       placeholder="">
-                                <button class="input-type-toggle" onclick="toggleInputType(${rowIndex}, '${col.name}')">📅</button>
-                            `;
-                        }
+                        td.textContent = row[col.id] || '';
                     }
                     
                     tr.appendChild(td);
                 });
                 
                 // 操作列
-                const actionTd = document.createElement('td');
-                actionTd.innerHTML = `<button class="delete-row" onclick="deleteRow(${rowIndex})">削除</button>`;
-                tr.appendChild(actionTd);
+                const td = document.createElement('td');
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = '削除';
+                deleteBtn.className = 'btn btn-danger';
+                deleteBtn.onclick = () => deleteRow(index);
+                td.appendChild(deleteBtn);
+                tr.appendChild(td);
                 
                 tbody.appendChild(tr);
             });
         }
         
-        function showColumnEditDialog(column, index) {
-            if (column.name === 'No') return;
+        // 顧客追加
+        function showAddCustomerModal() {
+            document.getElementById('addCustomerModal').style.display = 'block';
+        }
+        
+        function addCustomer() {
+            const customer = {
+                customerName: document.getElementById('customerName').value,
+                workNumber: document.getElementById('workNumber').value,
+                furigana: document.getElementById('furigana').value,
+                buildingLocation: document.getElementById('buildingLocation').value
+            };
             
-            const newName = prompt(`列名を変更: "${column.name}"`, column.name);
-            if (newName && newName !== column.name) {
-                data.forEach(row => {
-                    row[newName] = row[column.name];
-                    delete row[column.name];
-                });
-                
-                const newCellInputTypes = {};
-                Object.keys(cellInputTypes).forEach(key => {
-                    const [rowIndex, colName] = key.split('-');
-                    if (colName === column.name) {
-                        newCellInputTypes[`${rowIndex}-${newName}`] = cellInputTypes[key];
-                    } else {
-                        newCellInputTypes[key] = cellInputTypes[key];
-                    }
-                });
-                cellInputTypes = newCellInputTypes;
-                
-                column.name = newName;
-                renderTable();
-                saveData();
-                showNotification('列名を変更しました');
-            }
-        }
-        
-        function toggleInputType(rowIndex, columnName) {
-            const cellKey = `${rowIndex}-${columnName}`;
-            cellInputTypes[cellKey] = cellInputTypes[cellKey] === 'date' ? 'text' : 'date';
-            renderTable();
-        }
-        function convertToDateInput(value) {
-    if (!value || value.includes('-')) return value;
-    
-    // M/D形式の日付をyyyy-MM-dd形式に変換
-    const parts = value.split('/');
-    if (parts.length === 2) {
-        const year = new Date().getFullYear();
-        const month = parts[0].padStart(2, '0');
-        const day = parts[1].padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    }
-    
-    // 年/月/日形式の場合の処理
-    if (value.includes('年') && value.includes('月') && value.includes('日')) {
-        const matches = value.match(/(\d+)年\s*(\d+)月\s*(\d+)日/);
-        if (matches) {
-            const year = matches[1];
-            const month = matches[2].padStart(2, '0');
-            const day = matches[3].padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
-    }
-    
-    return '';
-}
-    function formatDateValue(dateValue) {
-    if (!dateValue) return '';
-    
-    // yyyy-MM-dd形式の場合
-    if (dateValue.includes('-')) {
-        const parts = dateValue.split('-');
-        if (parts.length === 3) {
-            const month = parseInt(parts[1]);
-            const day = parseInt(parts[2]);
-            return `${month}/${day}`;
-        }
-    }
-    
-    // Date型の場合
-    try {
-        const date = new Date(dateValue);
-        if (!isNaN(date.getTime())) {
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
-            return `${month}/${day}`;
-        }
-    } catch (e) {
-        // エラーの場合はそのまま返す
-    }
-    
-    return dateValue;
-}   
-        
-   
-        
-        function showEditCustomerModal() {
-            updateCustomerList();
-            updatePositionSelects();
-            document.getElementById('editCustomerModal').style.display = 'block';
-        }
-        
-        function showEditColumnModal() {
-            updateColumnList();
-            updatePositionSelects();
-            document.getElementById('editColumnModal').style.display = 'block';
-        }
-        
-        function updateCustomerList() {
-            const list = document.getElementById('customerList');
-            list.innerHTML = '<h4>既存の顧客一覧</h4>';
-            
-            data.forEach((customer, index) => {
-                const item = document.createElement('div');
-                item.className = 'column-item';
-                item.innerHTML = `
-                    <input type="text" value="${customer['顧客名']}" onchange="updateCustomerName(${index}, this.value)">
-                    <input type="text" value="${customer['工事No']}" onchange="updateCustomerWorkNo(${index}, this.value)" style="width: 100px;">
-                    <div class="column-actions">
-                        <button class="btn btn-danger btn-small" onclick="deleteRow(${index})">削除</button>
-                    </div>
-                `;
-                list.appendChild(item);
-            });
-        }
-        
-        function updateColumnList() {
-            const list = document.getElementById('columnList');
-            list.innerHTML = '<h4>既存の列一覧</h4>';
-            
-            columns.forEach((column, index) => {
-                if (column.name === 'No' || column.fixed) return;
-                
-                const item = document.createElement('div');
-                item.className = 'column-item';
-                item.innerHTML = `
-                    <input type="text" value="${column.name}" onchange="updateColumnName(${index}, this.value)">
-                    <div class="column-actions">
-                        <button class="btn btn-danger btn-small" onclick="deleteColumn(${index})">削除</button>
-                    </div>
-                `;
-                list.appendChild(item);
-            });
-        }
-        
-        function updateCustomerName(index, newName) {
-            data[index]['顧客名'] = newName;
-            updatePositionSelects();
-            renderTable();
-            saveData();
-        }
-        
-        function updateCustomerWorkNo(index, newNo) {
-            data[index]['工事No'] = newNo;
-            renderTable();
-            saveData();
-        }
-        
-        function updateColumnName(index, newName) {
-            const oldName = columns[index].name;
-            
-            data.forEach(row => {
-                row[newName] = row[oldName];
-                delete row[oldName];
-            });
-            
-            const newCellInputTypes = {};
-            Object.keys(cellInputTypes).forEach(key => {
-                const [rowIndex, colName] = key.split('-');
-                if (colName === oldName) {
-                    newCellInputTypes[`${rowIndex}-${newName}`] = cellInputTypes[key];
-                } else {
-                    newCellInputTypes[key] = cellInputTypes[key];
+            // 動的列の値を空で初期化
+            columns.forEach(col => {
+                if (!customer[col.id]) {
+                    customer[col.id] = '';
                 }
             });
-            cellInputTypes = newCellInputTypes;
             
-            columns[index].name = newName;
-            updateColumnList();
-            updatePositionSelects();
+            data.push(customer);
             renderTable();
             saveData();
-        }
-        
-        function deleteColumn(index) {
-            if (confirm(`「${columns[index].name}」列を削除してもよろしいですか？`)) {
-                const columnName = columns[index].name;
-                columns.splice(index, 1);
-                
-                data.forEach(row => {
-                    delete row[columnName];
-                });
-                
-                updateColumnList();
-                updatePositionSelects();
-                renderTable();
-                saveData();
-                showNotification('列を削除しました');
-            }
-        }
-        
-        function showAddCustomerForm() {
-            document.getElementById('addCustomerForm').style.display = 'block';
-        }
-        
-        function hideAddCustomerForm() {
-            document.getElementById('addCustomerForm').style.display = 'none';
+            closeModal('addCustomerModal');
+            
+            // フォームをクリア
             document.getElementById('customerName').value = '';
             document.getElementById('workNumber').value = '';
             document.getElementById('furigana').value = '';
             document.getElementById('buildingLocation').value = '';
-            document.getElementById('financing').value = '';
         }
         
-        function showAddColumnForm() {
-            document.getElementById('addColumnForm').style.display = 'block';
-        }
-        
-        function hideAddColumnForm() {
-            document.getElementById('addColumnForm').style.display = 'none';
-            document.getElementById('columnName').value = '';
-        }
-        
-        function updatePositionSelects() {
-            const rowSelect = document.getElementById('rowPosition');
-            if (rowSelect) {
-                rowSelect.innerHTML = '<option value="end">最後に追加</option>';
-                data.forEach((row, index) => {
-                    const option = document.createElement('option');
-                    option.value = index;
-                    option.textContent = `「${row['顧客名'] || 'No.' + (row.No || index + 1)}」の前に挿入`;
-                    rowSelect.appendChild(option);
-                });
-            }
-            
-            const colSelect = document.getElementById('columnPosition');
-            if (colSelect) {
-                colSelect.innerHTML = '<option value="end">最後に追加</option>';
-                columns.forEach((col, index) => {
-                    if (!col.fixed) {
-                        const option = document.createElement('option');
-                        option.value = index;
-                        option.textContent = `「${col.name}」の前に挿入`;
-                        colSelect.appendChild(option);
-                    }
-                });
-            }
-        }
-        
-        function showColumnVisibilityModal() {
-            const selector = document.getElementById('columnSelector');
-            selector.innerHTML = '';
-            
-            columns.forEach((col, index) => {
-                if (col.name !== 'No' && col.name !== '顧客名' && col.name !== '工事No') {
-                    const label = document.createElement('label');
-                    label.className = 'column-checkbox';
-                    label.innerHTML = `
-                        <input type="checkbox" ${col.visible ? 'checked' : ''} 
-                               data-column-index="${index}">
-                        ${col.name}
-                    `;
-                    selector.appendChild(label);
-                }
-            });
-            
-            document.getElementById('columnVisibilityModal').style.display = 'block';
-        }
-        
-        function applyColumnVisibility() {
-            const checkboxes = document.querySelectorAll('#columnSelector input[type="checkbox"]');
-            checkboxes.forEach(checkbox => {
-                const index = parseInt(checkbox.getAttribute('data-column-index'));
-                columns[index].visible = checkbox.checked;
-            });
-            renderTable();
-            closeModal('columnVisibilityModal');
-            saveData();
-        }
-        
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-        
-        function addRow() {
-            const position = document.getElementById('rowPosition').value;
-            const newRow = {
-                'No': position === 'end' ? data.length + 1 : parseInt(position) + 1,
-                '顧客名': document.getElementById('customerName').value,
-                '工事No': document.getElementById('workNumber').value,
-                'フリガナ': document.getElementById('furigana').value,
-                '建築地': document.getElementById('buildingLocation').value,
-                '融資': document.getElementById('financing').value
-            };
-            
-            columns.forEach(col => {
-                if (!newRow[col.name]) {
-                    newRow[col.name] = '';
-                }
-            });
-            
-            if (position === 'end') {
-                data.push(newRow);
-            } else {
-                data.splice(parseInt(position), 0, newRow);
-                data.forEach((row, index) => {
-                    row.No = index + 1;
-                });
-            }
-            
-            updateCustomerList();
-            updatePositionSelects();
-            renderTable();
-            saveData();
-            hideAddCustomerForm();
-            showNotification('顧客を追加しました');
-        }
-        
+        // 行削除
         function deleteRow(index) {
-            if (confirm('この顧客データを削除してもよろしいですか？')) {
+            if (confirm('削除してもよろしいですか？')) {
                 data.splice(index, 1);
-                data.forEach((row, index) => {
-                    row.No = index + 1;
-                });
-                updateCustomerList();
-                updatePositionSelects();
                 renderTable();
                 saveData();
-                showNotification('顧客データを削除しました');
             }
+        }
+        
+        // 列追加
+        function showAddColumnModal() {
+            document.getElementById('addColumnModal').style.display = 'block';
         }
         
         function addColumn() {
-            const columnName = document.getElementById('columnName').value.trim();
-            const position = document.getElementById('columnPosition').value;
-            
+            const columnName = document.getElementById('columnName').value;
             if (!columnName) {
                 alert('列名を入力してください');
                 return;
             }
             
-            if (columns.some(col => col.name === columnName)) {
-                alert('同じ名前の列が既に存在します');
-                return;
-            }
-            
-            const newColumn = { name: columnName, visible: true, fixed: false };
-            
-            if (position === 'end') {
-                columns.push(newColumn);
-            } else {
-                columns.splice(parseInt(position), 0, newColumn);
-            }
-            
-            data.forEach(row => {
-                row[columnName] = '';
+            const columnId = 'col_' + Date.now();
+            columns.push({
+                id: columnId,
+                name: columnName,
+                width: 150,
+                editable: true
             });
             
-            updateColumnList();
-            updatePositionSelects();
+            // 既存データに新しい列を追加
+            data.forEach(row => {
+                row[columnId] = '';
+            });
+            
             renderTable();
             saveData();
-            hideAddColumnForm();
-            showNotification('列を追加しました');
+            closeModal('addColumnModal');
+            document.getElementById('columnName').value = '';
         }
         
-        function updateCell(rowIndex, column, value) {
-            data[rowIndex][column] = value;
-            saveData();
-            
-            if (event && event.target) {
-                const element = event.target.parentElement || event.target;
-                element.classList.add('highlight');
-                setTimeout(() => {
-                    element.classList.remove('highlight');
-                }, 1000);
-            }
-        }
-        
-        function saveData() {
-            const office = document.getElementById('office').value;
-            const year = document.getElementById('year').value;
-            const saveKey = `taskProgress_${office}_${year}`;
-            localStorage.setItem(saveKey, JSON.stringify({
-                columns: columns,
-                data: data,
-                cellInputTypes: cellInputTypes
-            }));
-            
-            // 編集中の警告をシミュレート
-            document.getElementById('editStatus').classList.add('active');
-            setTimeout(() => {
-                document.getElementById('editStatus').classList.remove('active');
-            }, 3000);
-            
-            showNotification('データを保存しました');
-        }
-        
-        function loadData() {
-            const office = document.getElementById('office').value;
-            const year = document.getElementById('year').value;
-            const saveKey = `taskProgress_${office}_${year}`;
-            const saved = localStorage.getItem(saveKey);
-            
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                columns = parsed.columns || columns;
-                data = parsed.data || [];
-                cellInputTypes = parsed.cellInputTypes || {};
-            } else {
-                data = [];
-                cellInputTypes = {};
-            }
-        }
-        
-        function exportToCSV() {
-            const visibleColumns = columns.filter(col => col.visible);
-            const headers = visibleColumns.map(col => col.name);
-            
-            let csv = headers.join(',') + '\n';
+        // CSV出力
+        function exportData() {
+            let csv = columns.map(col => col.name).join(',') + '\n';
             
             data.forEach((row, index) => {
-                const rowData = visibleColumns.map(col => {
-                    const value = col.name === 'No' ? (row.No || index + 1) : (row[col.name] || '');
-                    const escaped = String(value).replace(/"/g, '""');
-                    return escaped.includes(',') || escaped.includes('\n') ? `"${escaped}"` : escaped;
+                const values = columns.map(col => {
+                    if (col.id === 'no') return index + 1;
+                    return row[col.id] || '';
                 });
-                csv += rowData.join(',') + '\n';
+                csv += values.join(',') + '\n';
             });
             
-            const BOM = '\uFEFF';
-            const blob = new Blob([BOM + csv], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `業務進捗管理_${document.getElementById('office').value}_${new Date().toISOString().split('T')[0]}.csv`;
+            a.download = `業務進捗_${new Date().toISOString().split('T')[0]}.csv`;
             a.click();
             URL.revokeObjectURL(url);
-            
-            showNotification('CSVファイルをダウンロードしました');
         }
         
+        // データ読込
         function importData() {
             document.getElementById('fileInput').click();
         }
         
-        document.getElementById('fileInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    try {
-                        const imported = JSON.parse(e.target.result);
-                        columns = imported.columns || columns;
-                        data = imported.data || [];
-                        cellInputTypes = imported.cellInputTypes || {};
-                        updatePositionSelects();
-                        renderTable();
-                        saveData();
-                        showNotification('データをインポートしました');
-                    } catch (err) {
-                        alert('ファイルの読み込みに失敗しました');
-                    }
-                };
-                reader.readAsText(file);
-            }
-        });
-        
-        // Excelファイル読み込み処理（結合セル対応版）
-        document.getElementById('excelFileInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                
-                // CSVファイルの場合
-                if (file.name.endsWith('.csv')) {
-                    reader.onload = function(e) {
-                        try {
-                            const text = e.target.result;
-                            const rows = text.split('\n').map(row => row.split(',').map(cell => cell.trim()));
-                            processSimpleCSVData(rows);
-                        } catch (error) {
-                            showNotification('CSVファイルの読み込みに失敗しました', true);
-                            console.error(error);
-                        }
-                    };
-                    reader.readAsText(file, 'UTF-8');
-                } else {
-                    // Excelファイルの場合
-                    reader.onload = function(e) {
-                        try {
-                            const data = new Uint8Array(e.target.result);
-                            const workbook = XLSX.read(data, { 
-                                type: 'array',
-                                cellStyles: true,
-                                cellFormula: true,
-                                cellDates: true,
-                                sheetStubs: true,
-                                raw: true
-                            });
-                            
-                            const firstSheetName = workbook.SheetNames[0];
-                            const worksheet = workbook.Sheets[firstSheetName];
-                            
-                            // 結合セルの情報を取得
-                            const merges = worksheet['!merges'] || [];
-                            
-                            // sheet_to_jsonでデータを取得
-                            const jsonData = XLSX.utils.sheet_to_json(worksheet, { 
-                                header: 1,
-                                raw: false,
-                                defval: ''
-                            });
-                            
-                            // 結合セルのデータを展開
-                            if (merges.length > 0) {
-                                merges.forEach(merge => {
-                                    const startRow = merge.s.r;
-                                    const endRow = merge.e.r;
-                                    const startCol = merge.s.c;
-                                    const endCol = merge.e.c;
-                                    
-                                    // 結合セルの値を取得
-                                    const value = jsonData[startRow] && jsonData[startRow][startCol] ? 
-                                                 jsonData[startRow][startCol] : '';
-                                    
-                                    // 結合範囲内のセルに同じ値を設定
-                                    for (let r = startRow; r <= endRow; r++) {
-                                        if (!jsonData[r]) jsonData[r] = [];
-                                        for (let c = startCol; c <= endCol; c++) {
-                                            jsonData[r][c] = value;
-                                        }
-                                    }
-                                });
-                            }
-                            
-                            processExcelData(jsonData);
-                        } catch (error) {
-                            showNotification('ファイルの読み込みに失敗しました', true);
-                            console.error(error);
-                        }
-                    };
-                    reader.readAsArrayBuffer(file);
-                }
-            }
-        });
-        
-        function processSimpleCSVData(rows) {
-            const newData = [];
-            
-            // ヘッダー行をスキップして、データ行のみ処理
-            for (let i = 1; i < rows.length; i++) {
-                const row = rows[i];
-                if (row && row[0] && row[0].trim()) {
-                    const newRow = {
-                        'No': newData.length + 1,
-                        '顧客名': row[0].trim(),
-                        '工事No': row[1] ? row[1].trim() : ''
-                    };
-                    
-                    // 他の列は空で初期化
-                    columns.forEach(col => {
-                        if (!newRow[col.name]) {
-                            newRow[col.name] = '';
-                        }
-                    });
-                    
-                    newData.push(newRow);
-                }
-            }
-            
-            if (newData.length > 0) {
-                if (confirm(`${newData.length}件のデータを読み込みました。現在のデータを置き換えますか？`)) {
-                    data = newData;
-                    updatePositionSelects();
-                    renderTable();
-                    saveData();
-                    showNotification('CSVデータを読み込みました');
-                }
-            } else {
-                showNotification('有効なデータが見つかりませんでした', true);
-            }
-        }
-        function processExcelData(rows) {
-    let headerRowIndex = -1;
-    for (let i = 0; i < Math.min(10, rows.length); i++) {
-        if (rows[i] && rows[i].some(cell => 
-            cell && cell.toString().includes('顧客名'))) {
-            headerRowIndex = i;
-            break;
-        }
-    }
-    
-    if (headerRowIndex === -1) {
-        showNotification('有効なデータが見つかりませんでした', true);
-        return;
-    }
-    
-    const headers = rows[headerRowIndex];
-    const newData = [];
-    
-    for (let i = headerRowIndex + 1; i < rows.length; i++) {
-        const row = rows[i];
-        if (row && row[1] && row[1].toString().trim()) {  // 顧客名で判定
-            const newRow = {};
-            
-            // 固定列のマッピング
-            newRow['No'] = row[0] || (newData.length + 1);
-            newRow['顧客名'] = row[1] || '';
-            newRow['工事No'] = row[2] || '';  // 3列目が工事No
-            
-            // 残りの列を動的にマッピング
-            for (let j = 3; j < headers.length; j++) {
-                if (headers[j]) {
-                    const header = headers[j].toString().trim()
-                        .replace(/\r\n/g, '')
-                        .replace(/\n/g, '')
-                        .replace(/\r/g, '');
-                    
-                    const value = row[j];
-                    if (value !== null && value !== undefined) {
-                        // Excelの日付処理
-                        if (typeof value === 'object' && value.constructor.name === 'Date') {
-                            const month = value.getMonth() + 1;
-                            const day = value.getDate();
-                            newRow[header] = `${month}/${day}`;
-                        } else if (typeof value === 'number' && value > 40000 && value < 50000) {
-                            // Excelの日付シリアル値
-                            const date = new Date((value - 25569) * 86400 * 1000);
-                            const month = date.getMonth() + 1;
-                            const day = date.getDate();
-                            newRow[header] = `${month}/${day}`;
-                        } else {
-                            newRow[header] = value.toString();
-                        }
-                    } else {
-                        newRow[header] = '';
-                    }
-                }
-            }
-            
-            // 不足している列を空文字で初期化
-            columns.forEach(col => {
-                if (!newRow.hasOwnProperty(col.name)) {
-                    newRow[col.name] = '';
-                }
-            });
-            
-            newData.push(newRow);
-        }
-    }
-    
-    if (newData.length > 0) {
-        if (confirm(`${newData.length}件のデータを読み込みました。現在のデータを置き換えますか？`)) {
-            data = newData;
-            
-            // 新しい列をcolumnsに追加
-            Object.keys(newData[0]).forEach(key => {
-                if (!columns.some(col => col.name === key)) {
-                    columns.push({ name: key, visible: true, fixed: false, editable: true });
-                }
-            });
-            
-            updatePositionSelects();
-            renderTable();
-            saveData();
-            showNotification('エクセルデータを読み込みました');
-        }
-    } else {
-        showNotification('有効なデータが見つかりませんでした', true);
-    }
-}
-       
-          const headers = rows[headerRowIndex];
-            const newData = [];
-            
-            for (let i = headerRowIndex + 1; i < rows.length; i++) {
-                const row = rows[i];
-                if (row && row[1] && row[1].toString().trim()) {
-                    const newRow = {};
-                    
-                    headers.forEach((header, index) => {
-                        if (header && header.toString().trim()) {
-                            let normalizedHeader = header.toString().trim()
-                                .replace(/\r\n/g, '')
-                                .replace(/\n/g, '')
-                                .replace(/\r/g, '');
-                            
-                            const value = row[index];
-                            if (value !== null && value !== undefined) {
-                                if (typeof value === 'object' && value.constructor.name === 'Date') {
-                                    // Excelの日付を処理
-                                    const month = value.getMonth() + 1;
-                                    const day = value.getDate();
-                                    newRow[normalizedHeader] = `${month}/${day}`;
-                                } else {
-                                    newRow[normalizedHeader] = value.toString();
-                                }
-                            } else {
-                                newRow[normalizedHeader] = '';
-                            }
-                        }
-                    });
-                    
-                    if (!newRow['No']) {
-                        newRow['No'] = newData.length + 1;
-                    }
-                    
-                    newData.push(newRow);
-                }
-            }
-            
-            if (newData.length > 0) {
-                if (confirm(`${newData.length}件のデータを読み込みました。現在のデータを置き換えますか？`)) {
-                    data = newData;
-                    
-                    Object.keys(newData[0]).forEach(key => {
-                        if (!columns.some(col => col.name === key)) {
-                            columns.push({ name: key, visible: true, fixed: false });
-                        }
-                    });
-                    
-                    updatePositionSelects();
-                    renderTable();
-                    saveData();
-                    showNotification('エクセルデータを読み込みました');
-                }
-            } else {
-                showNotification('有効なデータが見つかりませんでした', true);
-            }
+        // モーダルを閉じる
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
         }
         
-        function showNotification(message, isWarning = false) {
+        // 通知表示
+        function showNotification(message) {
             const notification = document.createElement('div');
-            notification.className = isWarning ? 'notification warning' : 'notification';
+            notification.className = 'notification';
             notification.textContent = message;
             document.body.appendChild(notification);
             
             setTimeout(() => {
                 notification.remove();
             }, 3000);
-        }// 固定列設定モーダルを表示
-function showColumnSettingsModal() {
-    const modal = document.createElement('div');
-    modal.className = 'modal';
-    modal.style.display = 'block';
-    modal.id = 'columnSettingsModal';
-    
-    let content = `
-        <div class="modal-content">
-            <h3 class="modal-header">列の固定設定</h3>
-            <div class="column-settings-list">
-    `;
-    
-    columns.forEach((col, index) => {
-        if (col.name !== 'No') {  // No列は変更不可
-            content += `
-                <div class="column-setting-item">
-                    <span>${col.name}</span>
-                    <label>
-                        <input type="checkbox" 
-                               ${col.fixed ? 'checked' : ''} 
-                               onchange="toggleColumnFixed(${index})">
-                        固定列にする
-                    </label>
-                </div>
-            `;
         }
-    });
-    
-    content += `
-            </div>
-            <div class="modal-buttons">
-                <button class="btn" onclick="applyColumnSettings()">適用</button>
-                <button class="btn btn-danger" onclick="closeModal('columnSettingsModal')">キャンセル</button>
-            </div>
-        </div>
-    `;
-    
-    modal.innerHTML = content;
-    document.body.appendChild(modal);
-}
-
-// 列の固定状態を切り替え
-function toggleColumnFixed(index) {
-    columns[index].fixed = !columns[index].fixed;
-}
-
-// 列の設定を適用
-function applyColumnSettings() {
-    renderTable();
-    saveData();
-    document.getElementById('columnSettingsModal').remove();
-    showNotification('列の設定を更新しました');
-}
         
-        // 年度変更時の処理
-        document.getElementById('year').addEventListener('change', function() {
-            loadData();
-            updatePositionSelects();
-            renderTable();
-        });
+        // 営業所・年度変更時
+        document.getElementById('office').addEventListener('change', init);
+        document.getElementById('year').addEventListener('change', init);
         
-        // 営業所変更時の処理
-        document.getElementById('office').addEventListener('change', function() {
-            loadData();
-            updatePositionSelects();
-            renderTable();
-        });
-        
-        // キーボードショートカット
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey || e.metaKey) {
-                if (e.key === 's') {
-                    e.preventDefault();
+        // ファイル読込
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            
+            if (file.name.endsWith('.csv')) {
+                reader.onload = function(e) {
+                    const text = e.target.result;
+                    const rows = text.split('\n');
+                    const headers = rows[0].split(',');
+                    
+                    data = [];
+                    for (let i = 1; i < rows.length; i++) {
+                        if (rows[i].trim()) {
+                            const values = rows[i].split(',');
+                            const row = {};
+                            
+                            row.customerName = values[1] || '';
+                            row.workNumber = values[2] || '';
+                            row.furigana = values[3] || '';
+                            row.buildingLocation = values[4] || '';
+                            
+                            data.push(row);
+                        }
+                    }
+                    
+                    renderTable();
                     saveData();
-                }
+                    showNotification('データを読み込みました');
+                };
+                reader.readAsText(file, 'UTF-8');
             }
         });
         
-        // 初期化
-        initializeTable();
+        // 初期化実行
+        init();
     </script>
 </body>
 </html>
