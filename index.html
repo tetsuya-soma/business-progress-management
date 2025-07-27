@@ -384,7 +384,36 @@
             margin: 10px 0;
         }
         
-        .column-checkbox {
+        .column-checkbox {.column-settings-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+.column-setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.column-setting-item:hover {
+    background: #f5f5f5;
+}
+
+.column-setting-item span {
+    font-weight: 500;
+}
+
+.column-setting-item label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
             display: block;
             margin: 5px 0;
         }
@@ -502,6 +531,7 @@
             <button class="tab active" onclick="showEditCustomerModal()">顧客を編集</button>
             <button class="tab" onclick="showEditColumnModal()">列を編集</button>
             <button class="tab" onclick="showColumnVisibilityModal()">表示列の選択</button>
+            <button class="tab" onclick="showColumnSettingsModal()">列の固定設定</button>
             <button class="tab" onclick="saveData()">保存</button>
             <button class="tab" onclick="exportToCSV()">CSV出力</button>
             <button class="tab" onclick="importData()">インポート</button>
@@ -610,52 +640,54 @@
     <script>
         let data = [];
         let columns = [
-            { name: 'No', visible: true, fixed: true },
-            { name: '顧客名', visible: true, fixed: true },
-            { name: '工事No', visible: true, fixed: true },
-            { name: 'フリガナ', visible: true },
-            { name: '建築地', visible: true },
-            { name: '融資', visible: true },
-            { name: 'プランナー', visible: true },
-            { name: '設計', visible: true },
-            { name: 'IC', visible: true },
-            { name: '工事', visible: true },
-            { name: '管理', visible: true },
-            { name: '積算', visible: true },
-            { name: '解体', visible: true },
-            { name: '現調', visible: true },
-            { name: '契約', visible: true },
-            { name: 'プラン決定', visible: true },
-            { name: 'プラン変更', visible: true },
-            { name: '地盤調査', visible: true },
-            { name: '遣方立合', visible: true },
-            { name: '敷地調査', visible: true },
-            { name: '事前融資', visible: true },
-            { name: '事前承認', visible: true },
-            { name: '土地契約', visible: true },
-            { name: '融資申込', visible: true },
-            { name: '融資承認', visible: true },
-            { name: '土地決裁', visible: true },
-            { name: '確認提出', visible: true },
-            { name: '技術申請', visible: true },
-            { name: '認定申請', visible: true },
-            { name: '最終図面依頼', visible: true },
-            { name: '決定承認図', visible: true },
-            { name: '着工', visible: true },
-            { name: '大工乗込', visible: true },
-            { name: '上棟', visible: true },
-            { name: '大工完了', visible: true },
-            { name: '完了検査', visible: true },
-            { name: '施主検査', visible: true },
-            { name: '引渡日（OP日）', visible: true },
-            { name: '契約完成', visible: true },
-            { name: '台帳竣工', visible: true },
-            { name: '引渡ﾌｧｲﾙお渡し日', visible: true },
-            { name: '中間（融資）', visible: true },
-            { name: '中間（自己資金）', visible: true },
-            { name: '最終金（融資）', visible: true },
-            { name: '最終金（自己資金）', visible: true }
-        ];
+            let columns = [
+    { name: 'No', visible: true, fixed: true, editable: false },
+    { name: '顧客名', visible: true, fixed: true, editable: true },
+    { name: '工事No', visible: true, fixed: true, editable: true },
+    { name: 'フリガナ', visible: true, fixed: false, editable: true },
+    { name: '建築地', visible: true, fixed: false, editable: true },
+    { name: '融資', visible: true, fixed: false, editable: true },
+    { name: 'プランナー', visible: true, fixed: false, editable: true },
+    { name: '設計', visible: true, fixed: false, editable: true },
+    { name: 'IC', visible: true, fixed: false, editable: true },
+    { name: '工事', visible: true, fixed: false, editable: true },
+    { name: '管理', visible: true, fixed: false, editable: true },
+    { name: '積算', visible: true, fixed: false, editable: true },
+    { name: '解体', visible: true, fixed: false, editable: true },
+    { name: '現調', visible: true, fixed: false, editable: true },
+    { name: '契約', visible: true, fixed: false, editable: true },
+    { name: 'プラン決定', visible: true, fixed: false, editable: true },
+    { name: 'プラン変更', visible: true, fixed: false, editable: true },
+    { name: '地盤調査', visible: true, fixed: false, editable: true },
+    { name: '遣方立合', visible: true, fixed: false, editable: true },
+    { name: '敷地調査', visible: true, fixed: false, editable: true },
+    { name: '事前融資', visible: true, fixed: false, editable: true },
+    { name: '事前承認', visible: true, fixed: false, editable: true },
+    { name: '土地契約', visible: true, fixed: false, editable: true },
+    { name: '融資申込', visible: true, fixed: false, editable: true },
+    { name: '融資承認', visible: true, fixed: false, editable: true },
+    { name: '土地決裁', visible: true, fixed: false, editable: true },
+    { name: '確認提出', visible: true, fixed: false, editable: true },
+    { name: '技術申請', visible: true, fixed: false, editable: true },
+    { name: '認定申請', visible: true, fixed: false, editable: true },
+    { name: '最終図面依頼', visible: true, fixed: false, editable: true },
+    { name: '決定承認図', visible: true, fixed: false, editable: true },
+    { name: '着工', visible: true, fixed: false, editable: true },
+    { name: '大工乗込', visible: true, fixed: false, editable: true },
+    { name: '上棟', visible: true, fixed: false, editable: true },
+    { name: '大工完了', visible: true, fixed: false, editable: true },
+    { name: '完了検査', visible: true, fixed: false, editable: true },
+    { name: '施主検査', visible: true, fixed: false, editable: true },
+    { name: '引渡日（OP日）', visible: true, fixed: false, editable: true },
+    { name: '契約完成', visible: true, fixed: false, editable: true },
+    { name: '台帳竣工', visible: true, fixed: false, editable: true },
+    { name: '引渡ﾌｧｲﾙお渡し日', visible: true, fixed: false, editable: true },
+    { name: '中間（融資）', visible: true, fixed: false, editable: true },
+    { name: '中間（自己資金）', visible: true, fixed: false, editable: true },
+    { name: '最終金（融資）', visible: true, fixed: false, editable: true },
+    { name: '最終金（自己資金）', visible: true, fixed: false, editable: true }
+];
+
         
         // セルの入力タイプを管理
         let cellInputTypes = {};
@@ -833,11 +865,11 @@
         }
         
         function formatDateValue(dateValue) {
-            if (!dateValue) return '';
-            const date = new Date(dateValue);
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
-            return `${month}/${day}`;
+    if (!dateValue) return '';
+    const date = new Date(dateValue);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${month}/${day}`;  // M/D形式で表
         }
         
         function showEditCustomerModal() {
@@ -1410,7 +1442,60 @@
             setTimeout(() => {
                 notification.remove();
             }, 3000);
+        }// 固定列設定モーダルを表示
+function showColumnSettingsModal() {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.display = 'block';
+    modal.id = 'columnSettingsModal';
+    
+    let content = `
+        <div class="modal-content">
+            <h3 class="modal-header">列の固定設定</h3>
+            <div class="column-settings-list">
+    `;
+    
+    columns.forEach((col, index) => {
+        if (col.name !== 'No') {  // No列は変更不可
+            content += `
+                <div class="column-setting-item">
+                    <span>${col.name}</span>
+                    <label>
+                        <input type="checkbox" 
+                               ${col.fixed ? 'checked' : ''} 
+                               onchange="toggleColumnFixed(${index})">
+                        固定列にする
+                    </label>
+                </div>
+            `;
         }
+    });
+    
+    content += `
+            </div>
+            <div class="modal-buttons">
+                <button class="btn" onclick="applyColumnSettings()">適用</button>
+                <button class="btn btn-danger" onclick="closeModal('columnSettingsModal')">キャンセル</button>
+            </div>
+        </div>
+    `;
+    
+    modal.innerHTML = content;
+    document.body.appendChild(modal);
+}
+
+// 列の固定状態を切り替え
+function toggleColumnFixed(index) {
+    columns[index].fixed = !columns[index].fixed;
+}
+
+// 列の設定を適用
+function applyColumnSettings() {
+    renderTable();
+    saveData();
+    document.getElementById('columnSettingsModal').remove();
+    showNotification('列の設定を更新しました');
+}
         
         // 年度変更時の処理
         document.getElementById('year').addEventListener('change', function() {
